@@ -1,0 +1,164 @@
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class bj2261{
+	
+	public static int closet(int arr1[],int arr2[], int s, int l) {
+		int m = (s+l)/2;
+		//int i=s;
+		//int k=l;
+		int min = Integer.MAX_VALUE;
+		//System.out.println("HERE");
+		/*if(l-s>2) {
+			closet(arr,s,m);
+			closet(arr,m+1,l);
+		}*/
+		/*if(l-s<=0) {
+			min =0;
+		}*/
+		if(l-s<=2) {
+			for(int i=s; i<l;i++) {
+				for(int j=i+1;j<=l;j++) {
+				if(min>(int) (Math.pow(arr1[i]-arr1[j],2)+Math.pow(arr2[i]-arr2[j], 2))) {
+				min = (int) (Math.pow(arr1[i]-arr1[j],2)+Math.pow(arr2[i]-arr2[j], 2));
+				}
+				}
+			}
+			/*if(min>(int)(Math.pow(arr[s][0]-arr[l][0], 2)+Math.pow(arr[s][1]-arr[l][1], 2))) {
+				min=(int)(Math.pow(arr[s][0]-arr[l][0], 2)+Math.pow(arr[s][1]-arr[l][1], 2));
+			}*/
+		}
+		if(l-s>2) {
+			int c1=-1;
+			int c2=-1;
+			min =Math.min(closet(arr1,arr2,s,m), closet(arr1,arr2,m+1,l));
+			//min =Math.min(min, (int)(Math.pow(arr[m][0]-arr[m+1][0], 2)+Math.pow(arr[m][1]-arr[m+1][1], 2)));
+			int d = (int) Math.sqrt(min);
+			//System.out.println(d);
+			
+			for(int i=s; i<=m;i++) {
+				if(arr1[i]>=arr1[m]-d) {
+					c1=i;
+					break;
+				}
+			}
+			for(int i=l; i>m;i--) {
+				if(arr1[i]<=arr1[m+1]+d) {
+					c2=i;
+					break;
+				}
+			}
+			
+			
+			//int cc2 = c2;
+			//int mm = m;
+			
+			int cc1 = c1;
+			for(int i =cc1 ; i<=m;i++) {
+				int mm1 = m+1;
+				if(arr1[mm1]-arr1[i]<=d&&mm1<=c2) {
+					if(min>(int)(Math.pow(arr1[i]-arr1[mm1], 2)+Math.pow(arr2[i]-arr2[mm1], 2))) {
+						min=(int)(Math.pow(arr1[i]-arr1[mm1], 2)+Math.pow(arr2[i]-arr2[mm1], 2));
+					}
+					mm1++;
+				}
+			}
+			
+			/*int k = m+1;
+			if(c1!=-1&&c2!=-1) {
+			for(int i = c1 ; i<=m ; i++) {
+				boolean inwon = true;
+				while(inwon) {
+				if(k<c2 && (arr[k][0]-arr[i][0])<=d) {
+					if(min>(int)(Math.pow(arr[i][0]-arr[k][0], 2)+Math.pow(arr[i][1]-arr[k][1], 2))) {
+						min=(int)(Math.pow(arr[i][0]-arr[k][0], 2)+Math.pow(arr[i][1]-arr[k][1], 2));
+					}k++;
+				}else if(k==c2&& (arr[k][0]-arr[i][0])<=d) {
+					if(min>(int)(Math.pow(arr[i][0]-arr[k][0], 2)+Math.pow(arr[i][1]-arr[k][1], 2))) {
+						min=(int)(Math.pow(arr[i][0]-arr[k][0], 2)+Math.pow(arr[i][1]-arr[k][1], 2));
+					}
+					inwon = false;
+				}
+				}
+			}
+			int p = m;
+			for(int i = c2 ; i>=m+1 ; i--) {
+				boolean inwon = true;
+				while(inwon) {
+				if(p<m && (arr[i][0]-arr[p][0])<=d) {
+					if(min>(int)(Math.pow(arr[p][0]-arr[i][0], 2)+Math.pow(arr[p][1]-arr[i][1], 2))) {
+						min=(int)(Math.pow(arr[p][0]-arr[i][0], 2)+Math.pow(arr[p][1]-arr[i][1], 2));
+					}p--;
+				}else if(p==m&& (arr[i][0]-arr[p][0])<=d) {
+					if(min>(int)(Math.pow(arr[p][0]-arr[i][0], 2)+Math.pow(arr[p][1]-arr[i][1], 2))) {
+						min=(int)(Math.pow(arr[p][0]-arr[i][0], 2)+Math.pow(arr[p][1]-arr[i][1], 2));
+					}
+					inwon = false;
+				}
+				}
+			}
+			}*/
+			
+			//if(arr[c1][0]+)
+			
+			//여기서 시간을 줄 일 수 있는뎅
+			/*for(int i=c1;i<m+1;i++) {
+				for(int j=c2;j>=m+1;j--) {
+				if(min>(int)(Math.pow(arr[i][0]-arr[j][0], 2)+Math.pow(arr[i][1]-arr[j][1], 2))) {
+					min=(int)(Math.pow(arr[i][0]-arr[j][0], 2)+Math.pow(arr[i][1]-arr[j][1], 2));
+				}
+				}
+			}
+			if(min>(int)(Math.pow(arr[c1][0]-arr[c2][0], 2)+Math.pow(arr[c1][1]-arr[c2][1], 2))) {
+				min = (int)(Math.pow(arr[c1][0]-arr[c2][0], 2)+Math.pow(arr[c1][1]-arr[c2][1], 2));
+			}*/
+			
+			
+		}
+		return min;
+	}
+
+	
+	 public static void sortArray(int[][] arr)
+	    {
+	        Arrays.sort(arr, new Comparator<int[]>() {
+	        	@Override
+	            public int compare(int[] arr1, int[] arr2) {
+	                if( ((Comparable<Integer>)arr1[0]).compareTo(arr2[0]) > 0 )
+	                    return 1;
+	                else
+	                    return -1;
+	            }
+	        });
+	    }
+	
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int i = sc.nextInt();
+		int arr[][]=new int[i][2];
+		for(int j=0; j<i;j++) {
+			arr[j][0]=sc.nextInt();
+			arr[j][1]=sc.nextInt();
+		}
+		
+		
+		
+		sortArray(arr);
+		int arr1[]= new int[i];
+		int arr2[]= new int[i];
+		for(int j=0; j<i;j++) {
+			arr1[j]=arr[j][0];
+			arr2[j]=arr[j][1];
+		}
+		
+		System.out.println(closet(arr1,arr2, 0, i-1));
+		
+		/*for(int j=0;j<i;j++) {
+		System.out.println(arr[j][0]+" "+arr[j][1]);
+		}*/
+		sc.close();
+	}
+
+}
